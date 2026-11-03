@@ -1,0 +1,14 @@
+*.exe
+*.pdb
+*.zip
+*.log
+bin/
+obj/
+dist/
+test-data/
+self-test.txt
+.vs/
+Backups/
+Jobs/
+pending.xml
+last-error.txt

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <LangVersion>5</LangVersion>
+    <RootNamespace>AppShelf</RootNamespace>
+    <AssemblyName>AppShelf</AssemblyName>
+    <ApplicationIcon>assets\AppShelf.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup><EmbeddedResource Include="assets\app-icon.png"><LogicalName>AppShelf.Logo</LogicalName></EmbeddedResource></ItemGroup>
+  <ItemGroup><Compile Remove="installer\Loader.cs" /></ItemGroup>
+</Project>
+
+
