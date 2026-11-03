@@ -1,0 +1,41 @@
+name: Build and test Windows app
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Build
+        shell: pwsh
+        run: ./build.ps1
+      - name: Test disposable registry fixture
+        shell: pwsh
+        run: |
+          $appTest = Start-Process -FilePath "$PWD/AppShelf.exe" -ArgumentList '--self-test','--registry-fixture' -Wait -PassThru
+          Get-Content ./self-test.txt
+          if ($appTest.ExitCode -ne 0) { throw 'Tests failed' }
+      - name: Package portable
+        shell: pwsh
+        run: ./package.ps1
+      - name: Build offline setup
+        shell: pwsh
+        run: ./installer/build-loader.ps1
+      - uses: actions/upload-artifact@v7
+        with:
+          name: AppShelf-Windows-beta
+          path: |
+            dist/*.zip
+            dist/*.exe
+            dist/SHA256SUMS.txt
+            self-test.txt
+          if-no-files-found: error
+          retention-days: 14
+
